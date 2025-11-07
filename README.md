@@ -1,6 +1,6 @@
-# RC Quadruped ROS2 Simulation
+# Robocon Quadruped ROS2 Simulation
 
-## 1 Start
+## 1. Start
 
 #### 1.1 Set Environment
 
@@ -39,6 +39,6 @@
 
 ## Thanks
 
-### legubiao/quadruped_ros2_control
+### 1. legubiao/quadruped_ros2_control
 
 [https://github.com/legubiao/quadruped_ros2_control](https://github.com/legubiao/quadruped_ros2_control)
