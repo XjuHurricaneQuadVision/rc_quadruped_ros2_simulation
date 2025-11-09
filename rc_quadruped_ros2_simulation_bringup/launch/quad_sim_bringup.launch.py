@@ -94,15 +94,24 @@ def launch_setup(context, *args, **kwargs):
         Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
-            arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'],
-            output='screen'
+            arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock]'],
+            output='screen',
+            parameters=[{'use_sim_time': True}]
+        ),
+        Node(
+            package='keyboard_input',  
+            executable='keyboard_input',  
+            name='keyboard_input_node',
+            output='screen',
+            parameters=[{'use_sim_time': True}]
+                
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 [PathJoinSubstitution([FindPackageShare('ros_gz_sim'),
                                        'launch',
                                        'gz_sim.launch.py'])]),
-            launch_arguments=[('gz_args', [' -r -v 4 ' + world_file])]),
+            launch_arguments=[('gz_args', [' -r -v 4 empty.sdf'])]),
         robot_state_publisher,
         gz_spawn_entity,
         RegisterEventHandler(
