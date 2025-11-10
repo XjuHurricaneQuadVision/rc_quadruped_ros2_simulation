@@ -1,0 +1,10 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/uninstall.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/keyboard_input_uninstall.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/keyboard_input.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/test.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/edit_cache.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/rebuild_cache.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/list_install_components.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/install.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/install/local.dir
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/CMakeFiles/install/strip.dir

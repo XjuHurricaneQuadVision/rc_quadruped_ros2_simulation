@@ -1,0 +1,3 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/leg_pd_controller/lib/leg_pd_controller/libleg_pd_controller.so
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/leg_pd_controller/share/leg_pd_controller/cmake/export_leg_pd_controllerExport.cmake
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/leg_pd_controller/share/leg_pd_controller/cmake/export_leg_pd_controllerExport-release.cmake

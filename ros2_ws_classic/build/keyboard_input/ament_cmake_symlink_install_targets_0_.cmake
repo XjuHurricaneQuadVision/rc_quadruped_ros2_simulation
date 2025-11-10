@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/keyboard_input/keyboard_input" "TARGETS" "keyboard_input" "DESTINATION" "lib/keyboard_input")

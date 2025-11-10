@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "control_input_msgs__py",
+		"source" : "/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/control_input_msgs/control_input_msgs__py"
+	}
+}

@@ -1,0 +1,1 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/control_input_msgs/rosidl_generator_py/control_input_msgs/msg/_inputs.py

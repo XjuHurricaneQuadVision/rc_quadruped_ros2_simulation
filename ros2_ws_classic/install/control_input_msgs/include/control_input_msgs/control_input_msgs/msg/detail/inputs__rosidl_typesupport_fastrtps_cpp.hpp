@@ -1,0 +1,1 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/control_input_msgs/rosidl_typesupport_fastrtps_cpp/control_input_msgs/msg/detail/inputs__rosidl_typesupport_fastrtps_cpp.hpp

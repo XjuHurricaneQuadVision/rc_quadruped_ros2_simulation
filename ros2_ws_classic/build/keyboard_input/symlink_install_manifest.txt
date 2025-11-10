@@ -1,0 +1,16 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/lib/keyboard_input/keyboard_input
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/ament_index/resource_index/package_run_dependencies/keyboard_input
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/ament_index/resource_index/parent_prefix_path/keyboard_input
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/environment/ament_prefix_path.sh
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/environment/ament_prefix_path.dsv
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/environment/path.sh
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/environment/path.dsv
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/local_setup.bash
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/local_setup.sh
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/local_setup.zsh
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/local_setup.dsv
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/package.dsv
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/ament_index/resource_index/packages/keyboard_input
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/cmake/keyboard_inputConfig.cmake
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/cmake/keyboard_inputConfig-version.cmake
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/install/keyboard_input/share/keyboard_input/package.xml

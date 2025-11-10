@@ -1,0 +1,1 @@
+/home/zzy/quadruped_ros2_control/ros2_ws_classic/build/control_input_msgs/ament_cmake_core/control_input_msgsConfig-version.cmake

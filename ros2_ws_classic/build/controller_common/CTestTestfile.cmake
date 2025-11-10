@@ -1,0 +1,6 @@
+# CMake generated Testfile for 
+# Source directory: /home/zzy/quadruped_ros2_control/ros2_ws_classic/src/controller_common
+# Build directory: /home/zzy/quadruped_ros2_control/ros2_ws_classic/build/controller_common
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.

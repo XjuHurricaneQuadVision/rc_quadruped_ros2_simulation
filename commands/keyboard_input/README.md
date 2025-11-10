@@ -22,12 +22,12 @@ ros2 run keyboard_input keyboard_input
 
 ## 1. Use Instructions for Unitree Guide
 ### 1.1 Control Mode
-* Passive Mode: Keyboard 1
-* Fixed Stand: Keyboard 2
-    * Free Stand: Keyboard 3
-    * Trot: Keyboard 4
-    * SwingTest: Keyboard 5
-    * Balance: Keyboard 6
+* Passive Mode: Keyboard 1    被动站
+* Fixed Stand: Keyboard 2     固定站
+    * Free Stand: Keyboard 3  自由站
+    * Trot: Keyboard 4    小跑
+    * SwingTest: Keyboard 5 摆动测试
+    * Balance: Keyboard 6  平衡测试
 ### 1.2 Control Input
 * WASD IJKL: Move robot
-* Space: Reset Speed Input
+* Space: Reset Speed Input  重置速度输入

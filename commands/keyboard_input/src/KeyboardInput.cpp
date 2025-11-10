@@ -6,13 +6,14 @@
 
 KeyboardInput::KeyboardInput() : Node("keyboard_input_node") {
     publisher_ = create_publisher<control_input_msgs::msg::Inputs>("control_input", 10);
-    timer_ = create_wall_timer(std::chrono::microseconds(100), std::bind(&KeyboardInput::timer_callback, this));
+    timer_ = create_wall_timer(std::chrono::milliseconds(10), std::bind(&KeyboardInput::timer_callback, this));
     inputs_ = control_input_msgs::msg::Inputs();
 
-    tcgetattr(STDIN_FILENO, &old_tio_);
+    tcgetattr(STDIN_FILENO, &old_tio_);         // 终端设置（关闭回显 实时响应）
     new_tio_ = old_tio_;
     new_tio_.c_lflag &= (~ICANON & ~ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &new_tio_);
+
     RCLCPP_INFO(get_logger(), "Keyboard input node started.");
     RCLCPP_INFO(get_logger(), "Press 1-0 to switch between different modes");
     RCLCPP_INFO(get_logger(), "Use W/S/A/D and I/K/J/L to move the robot.");
@@ -36,11 +37,23 @@ void KeyboardInput::timer_callback() {
     } else {
         if (just_published_) {
             reset_count_ -= 1;
+
+            // RCLCPP_INFO(get_logger(), "DEBUG: reset_count_=%d, just_published_=%d, command=%d, "
+            //                "lx=%.2f, ly=%.2f, rx=%.2f, ry=%.2f",
+            // reset_count_, just_published_, inputs_.command,
+            // inputs_.lx, inputs_.ly, inputs_.rx, inputs_.ry);
+
+
             if (reset_count_ == 0) {
                 just_published_ = false;
                 if (inputs_.command != 0) {
                     inputs_.command = 0;
                     publisher_->publish(inputs_);
+                    // RCLCPP_INFO(get_logger(), "DEBUG: reset_count_=%d, just_published_=%d, command=%d, "
+                    //        "lx=%.2f, ly=%.2f, rx=%.2f, ry=%.2f",
+                    // reset_count_, just_published_, inputs_.command,
+                    // inputs_.lx, inputs_.ly, inputs_.rx, inputs_.ry);
+
                 }
             }
         }
