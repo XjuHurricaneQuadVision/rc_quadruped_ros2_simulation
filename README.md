@@ -23,7 +23,7 @@ cd quad_sim_ws
 - rosdep
 
 ```bash
-rosdep install --from-paths src --ignore-src -r -y
+rosdep install -r --from-paths src --ignore-src --rosdistro $ROS_DISTRO -y
 ```
 
 - Compile the package
@@ -44,7 +44,6 @@ ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py
 source install/setup.bash
 ros2 run keyboard_input keyboard_input
 ```
-
 
 
 
