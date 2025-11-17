@@ -10,7 +10,6 @@
 
 - Ignition Gazebo [Fortress](https://gazebosim.org/docs/fortress/install_ubuntu/):
 
-
 #### 1.2 Create Workspace
 
 ```bash
@@ -35,31 +34,18 @@ colcon build --symlink-install
 #### 1.4 Run
 
 - 启动仿真环境
+
 ```bash
 source install/setup.bash
-ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py
+ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py world_file:=warehouse
 ```
+
 - 启动键盘控制
+
 ```bash
+source install/setup.bash
 ros2 run keyboard_input keyboard_input
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Thanks
 
