@@ -116,7 +116,6 @@ def launch_setup(context, *args, **kwargs):
         ),
     ]
 
-
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('pkg_description', default_value='go2_description'),
