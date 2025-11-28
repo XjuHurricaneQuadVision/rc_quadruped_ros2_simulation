@@ -1,17 +1,3 @@
-# Copyright 2025 Jackson Huang
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import os
 
 import xacro
@@ -25,20 +11,26 @@ from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def launch_setup(context, *args, **kwargs):
-    
-    """--------------------context configurations---------------------"""
-    package_description = context.launch_configurations['pkg_description']
+
+    pkg_description = context.launch_configurations['pkg_description']
     init_height = context.launch_configurations['height']
     world_file = context.launch_configurations['world_file']
-    default_sdf_path = os.path.join(get_package_share_directory('rc_quadruped_ros2_simulation_bringup'), 'resources','worlds',world_file + '.sdf')
 
-    """---------------------------file path---------------------------"""
-    pkg_path = os.path.join(get_package_share_directory(package_description))
+    default_world = os.path.join(
+        get_package_share_directory('rc_quadruped_ros2_simulation_bringup'),
+        'resources', 'worlds', world_file + '.world'
+    )
+
+    pkg_path = os.path.join(get_package_share_directory(pkg_description))
     xacro_file = os.path.join(pkg_path, 'xacro', 'robot.xacro')
-    robot_description = xacro.process_file(xacro_file, mappings={'GAZEBO': 'true'}).toxml()
-    rviz_config_file = os.path.join(get_package_share_directory(package_description), "config", "visualize_urdf.rviz")
 
-    """------------------------nodes for launch------------------------"""
+    robot_description = xacro.process_file(xacro_file, mappings={'GAZEBO': 'true', 'CLASSIC': 'true'}).toxml()
+
+    rviz_config_file = os.path.join(
+        pkg_path, "config", "visualize_urdf.rviz"
+    )
+
+    # --- RVIZ ---
     rviz = Node(
         package='rviz2',
         executable='rviz2',
@@ -46,19 +38,32 @@ def launch_setup(context, *args, **kwargs):
         output='screen',
         arguments=["-d", rviz_config_file]
     )
-    
-    gz_spawn_entity = Node(
-        package='ros_gz_sim',
-        executable='create',
-        output='screen',
-        arguments=['-topic', 'robot_description','-name', 'robot','-allow_renaming', 'true',
-        '-x', '1.5','-y', '-2.0','-z', init_height,'-Y', '1.57'  ],
-        )
 
+    # ---- Classic Gazebo ----
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            PathJoinSubstitution([FindPackageShare('gazebo_ros'), 'launch', 'gazebo.launch.py'])
+        ]),
+        launch_arguments={'world': default_world,'verbose': 'true'}.items()
+    )
+
+    # --- Spawn robot ---
+    spawn_entity = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=[
+            '-topic', 'robot_description',
+            '-entity', 'robot',
+            '-x', '0', '-y', '0', '-z', init_height,
+            '-Y', '1.57'
+        ],
+        output='screen'
+    )
+    
+    # --- Robot State Publisher ---
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        name='robot_state_publisher',
         parameters=[
             {
                 'publish_frequency': 20.0,
@@ -69,6 +74,7 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
+    # --- Controllers ---
     joint_state_publisher = Node(
         package="controller_manager",
         executable="spawner",
@@ -82,84 +88,39 @@ def launch_setup(context, *args, **kwargs):
         arguments=["imu_sensor_broadcaster",
                    "--controller-manager", "/controller_manager"],
     )
+    
+    leg_pd_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["leg_pd_controller",
+                   "--controller-manager", "/controller_manager"],
+    )
 
     unitree_guide_controller = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["unitree_guide_controller", "--controller-manager", "/controller_manager"],
     )
-    
-    gz_bridge_node = Node(
-    package="ros_gz_bridge",
-    executable="parameter_bridge",
-    arguments=[
-        "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-        "/mid360/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan",
-        "/mid360/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked",
-    ],
-    output="screen",
-    parameters=[
-        {'use_sim_time': True},
-    ]
-)
 
-    """---------------------launch all of the nodes---------------------"""
     return [
         rviz,
-        Node(
-            package='ros_gz_bridge',
-            executable='parameter_bridge',
-            arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock]'],
-            output='screen',
-            parameters=[{'use_sim_time': True}]
-        ),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [PathJoinSubstitution([FindPackageShare('ros_gz_sim'),
-                                        'launch',
-                                        'gz_sim.launch.py'])]),
-            launch_arguments=[('gz_args', [' -r -v 4 ', default_sdf_path])]),
-        
+        gazebo,
         robot_state_publisher,
-        gz_spawn_entity,
+        spawn_entity,
+        leg_pd_controller,
         RegisterEventHandler(
             event_handler=OnProcessExit(
-                target_action=gz_spawn_entity,
-                on_exit=[imu_sensor_broadcaster, joint_state_publisher],
+                target_action=leg_pd_controller,
+                on_exit=[imu_sensor_broadcaster, joint_state_publisher, unitree_guide_controller],
             )
         ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=joint_state_publisher,
-                on_exit=[ unitree_guide_controller],
-            )
-        ),
-        gz_bridge_node,
     ]
 
+
 def generate_launch_description():
-    pkg_description = DeclareLaunchArgument(
-        'pkg_description',
-        default_value='go2_description',
-        description='package for robot description'
-    )
-
-    height = DeclareLaunchArgument(
-        'height',
-        default_value='0.5',
-        description='Init height in simulation'
-    )
-
-    world_file = DeclareLaunchArgument(
-        'world_file',
-        default_value='default',
-        description='Gazebo world file to load'
-    )
-
     return LaunchDescription([
-        pkg_description,
-        height,
-        world_file,
-        OpaqueFunction(function=launch_setup),
+        DeclareLaunchArgument('pkg_description', default_value='go2_description'),
+        DeclareLaunchArgument('height', default_value='0.5'),
+        DeclareLaunchArgument('world_file', default_value='default'),
+        OpaqueFunction(function=launch_setup)
     ])
