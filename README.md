@@ -8,7 +8,7 @@
 
 - ROS: Humble
 
-- Ignition Gazebo [Fortress](https://gazebosim.org/docs/fortress/install_ubuntu/):
+- [Classic Gazebo ](https://classic.gazebosim.org/tutorials) 
 
 #### 1.2 Create Workspace
 
@@ -39,6 +39,7 @@ colcon build --symlink-install
 source install/setup.bash
 ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py world_file:=warehouse
 ```
+                                                                            
 
 - 启动键盘控制
 

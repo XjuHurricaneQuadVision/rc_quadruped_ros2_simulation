@@ -30,7 +30,7 @@ def launch_setup(context, *args, **kwargs):
     package_description = context.launch_configurations['pkg_description']
     init_height = context.launch_configurations['height']
     world_file = context.launch_configurations['world_file']
-    default_sdf_path = os.path.join(get_package_share_directory('rc_quadruped_ros2_simulation_bringup'), 'resources','worlds',      world_file + '.sdf')
+    default_sdf_path = os.path.join(get_package_share_directory('rc_quadruped_ros2_simulation_bringup'), 'resources','worlds',world_file + '.sdf')
 
     """---------------------------file path---------------------------"""
     pkg_path = os.path.join(get_package_share_directory(package_description))
@@ -88,6 +88,20 @@ def launch_setup(context, *args, **kwargs):
         executable="spawner",
         arguments=["unitree_guide_controller", "--controller-manager", "/controller_manager"],
     )
+    
+    gz_bridge_node = Node(
+    package="ros_gz_bridge",
+    executable="parameter_bridge",
+    arguments=[
+        "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+        "/mid360/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan",
+        "/mid360/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked",
+    ],
+    output="screen",
+    parameters=[
+        {'use_sim_time': True},
+    ]
+)
 
     """---------------------launch all of the nodes---------------------"""
     return [
@@ -98,14 +112,6 @@ def launch_setup(context, *args, **kwargs):
             arguments=['/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock]'],
             output='screen',
             parameters=[{'use_sim_time': True}]
-        ),
-        Node(
-            package='keyboard_input',  
-            executable='keyboard_input',  
-            name='keyboard_input_node',
-            output='screen',
-            parameters=[{'use_sim_time': True}]
-                
         ),
 
         IncludeLaunchDescription(
@@ -129,6 +135,7 @@ def launch_setup(context, *args, **kwargs):
                 on_exit=[ unitree_guide_controller],
             )
         ),
+        gz_bridge_node,
     ]
 
 def generate_launch_description():

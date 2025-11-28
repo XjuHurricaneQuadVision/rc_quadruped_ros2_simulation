@@ -9,7 +9,8 @@
   <xacro:include filename="$(find go2_description)/xacro/const.xacro"/>
   <xacro:include filename="$(find go2_description)/xacro/materials.xacro"/>
   <xacro:include filename="$(find go2_description)/xacro/leg.xacro"/>
-
+  <xacro:include filename="$(find go2_description)/model/mid360/mid360.xacro"/>
+  
   <xacro:if value="$(arg GAZEBO)">
     <xacro:if value="$(arg CLASSIC)">
       <xacro:include filename="$(find go2_description)/xacro/gazebo_classic.xacro"/>
@@ -122,25 +123,9 @@
     </collision>
   </link>
 
-  <joint name="camera_joint_front" type="fixed">
-    <parent link="trunk"/>
-    <child link="front_camera"/>
-    <origin rpy="0 0 0" xyz="0.32715 0 0.04297"/>
-  </joint>
-
-  <link name="front_camera">
-  </link>
-
-  <joint name="lidar_joint" type="fixed">
-    <origin
-        xyz="0.28945 0 -0.046825" rpy="0 2.8782 0"/>
-    <parent link="trunk"/>
-    <child link="lidar"/>
-    <axis xyz="0 0 0"/>
-  </joint>
-
-  <link name="lidar">
-  </link>
+  <xacro:mid360  name="livox_frame" parent="trunk" topic="/livox">
+    <origin xyz="0.22 0.0 0.12" rpy="0.0 0 0.0"/>
+  </xacro:mid360> 
 
   <xacro:leg name="FR" mirror="-1" mirror_dae="False" front_hind="1" front_hind_dae="True"/>
   <xacro:leg name="FL" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True"/>

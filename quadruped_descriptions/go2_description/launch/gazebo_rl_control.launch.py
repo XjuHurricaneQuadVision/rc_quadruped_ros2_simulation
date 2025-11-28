@@ -18,7 +18,6 @@ def process_xacro():
     robot_description_config = xacro.process_file(xacro_file, mappings={'GAZEBO': 'true'})
     return robot_description_config.toxml()
 
-
 def generate_launch_description():
     rviz_config_file = os.path.join(get_package_share_directory(package_description), "config", "visualize_urdf.rviz")
 
