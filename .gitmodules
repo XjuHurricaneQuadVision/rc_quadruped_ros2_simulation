@@ -1,3 +1,6 @@
 [submodule "livox_ros_driver2"]
 	path = livox_ros_driver2
 	url = https://github.com/XjuHurricaneQuadVision/livox_ros_driver2.git
+[submodule "point_lio"]
+	path = point_lio
+	url = https://github.com/XjuHurricaneQuadVision/point_lio.git
