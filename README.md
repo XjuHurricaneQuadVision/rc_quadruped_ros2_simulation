@@ -16,6 +16,9 @@
 mkdir -p quad_sim_ws/src
 cd quad_sim_ws
 ```
+```
+git clone --recursive https://github.com/XjuHurricaneQuadVision/rc_quadruped_ros2_simulation.git
+```
 
 #### 1.3 Build
 
