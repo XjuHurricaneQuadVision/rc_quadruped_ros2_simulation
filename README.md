@@ -40,7 +40,7 @@ colcon build --symlink-install
 
 ```bash
 source install/setup.bash
-ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py world_file:=big
+ros2 launch rc_quadruped_ros2_simulation_bringup quad_sim_bringup.launch.py world_file:=warehouse
 ```
                                                                             
 
