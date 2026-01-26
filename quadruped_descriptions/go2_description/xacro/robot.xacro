@@ -9,7 +9,6 @@
   <xacro:include filename="$(find go2_description)/xacro/const.xacro"/>
   <xacro:include filename="$(find go2_description)/xacro/materials.xacro"/>
   <xacro:include filename="$(find go2_description)/xacro/leg.xacro"/>
-  <xacro:include filename="$(find go2_description)/model/mid360/mid360.xacro"/>
   
   <xacro:if value="$(arg GAZEBO)">
     <xacro:if value="$(arg CLASSIC)">
@@ -60,32 +59,31 @@
       <geometry>
         <mesh filename="file://$(find go2_description)/meshes/trunk.dae" scale="1 1 1"/>
       </geometry>
-      <!-- <material name="orange"/> -->
     </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="${trunk_length} ${trunk_width} ${trunk_height}"/>
-      </geometry>
-    </collision>
+
+    <!-- 删除 mesh collision，避免巨大黑色实体 -->
+
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.1881 0.04675 0.057"/>
       </geometry>
     </collision>
+
     <collision>
       <origin rpy="0 0 0" xyz="0.285 0 0.01"/>
       <geometry>
         <cylinder length="0.05" radius="0.045"/>
       </geometry>
     </collision>
+
     <collision>
       <origin rpy="0 0 0" xyz="0.293 0 -0.06"/>
       <geometry>
         <box size="0.047 0.047 0.047"/>
       </geometry>
     </collision>
+
     <inertial>
       <origin rpy="0 0 0" xyz="${trunk_com_x} ${trunk_com_y} ${trunk_com_z}"/>
       <mass value="${trunk_mass}"/>
@@ -95,6 +93,8 @@
           izz="${trunk_izz}"/>
     </inertial>
   </link>
+
+
 
   <joint name="imu_joint" type="fixed">
     <parent link="trunk"/>
@@ -123,9 +123,20 @@
     </collision>
   </link>
 
-  <xacro:mid360  name="livox_frame" parent="trunk" topic="/livox">
-    <origin xyz="0.22 0.0 0.12" rpy="0.0 0 0.0"/>
-  </xacro:mid360> 
+  <link name="livox_frame">
+    <visual>
+      <geometry>
+        <sphere radius="0.01"/> <!-- 用来占位 -->
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="livox_mount_joint" type="fixed">
+    <parent link="trunk"/>
+    <child link="livox_frame"/>
+    <origin xyz="0.22 0.0 0.12" rpy="0 0 0"/>
+  </joint>
+
 
   <xacro:leg name="FR" mirror="-1" mirror_dae="False" front_hind="1" front_hind_dae="True"/>
   <xacro:leg name="FL" mirror="1" mirror_dae="True" front_hind="1" front_hind_dae="True"/>
